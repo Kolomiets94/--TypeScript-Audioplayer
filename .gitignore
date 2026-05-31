@@ -1,7 +1,11 @@
 node_modules/
 .DS_Store
 .env
+.env.local
 express-backend/users.json
 dist/
 build/
 *.log
+npm-debug.log*
+.vscode/
+.idea/
