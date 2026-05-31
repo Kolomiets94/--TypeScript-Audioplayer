@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+.env
+express-backend/users.json
+dist/
+build/
+*.log

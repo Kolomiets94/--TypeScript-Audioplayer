@@ -1,0 +1,259 @@
+@import '../styles/variables';
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: $white;
+}
+
+.main {
+  flex: 1 1 auto;
+  margin-left: $sidebar-width; // 290px
+  background: $white;
+
+  // Десктоп: грид для размещения поиска и профиля в одной строке
+  display: grid;
+  grid-template-columns: 1fr auto; // поиск занимает доступное место, профиль — по ширине контента
+  align-items: start;
+  gap: 20px;
+  padding: 15px 30px 0 46px;
+
+  @media (max-width: 767px) {
+    margin-left: 0;
+    background: $bg-sidebar;
+    display: block; // на мобильных отключаем грид
+    padding: 0 16px 120px; // нижний отступ, чтобы плеер не перекрывал контент
+  }
+}
+
+/* Десктопный профиль (скрыт на мобильных) */
+.profileBlock {
+  width: $profile-width;      // 246px
+  height: $profile-height;     // 53px
+  background: $bg-sidebar;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+
+  // На мобильных скрываем, там есть мобильный хедер
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-circle;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+
+.username {
+  font-size: $font-size-md;
+  line-height: 12px;
+  color: $text-primary;
+  margin-left: 8px;
+  flex: 1;
+}
+
+.chevronImg {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) saturate(100%) invert(45%) sepia(96%) saturate(1842%) hue-rotate(338deg);
+  cursor: pointer;
+}
+
+.editNameContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  margin-left: 8px;
+}
+
+.nameInput {
+  flex: 1;
+  border: 1px solid $border-color;
+  border-radius: $radius-sm;
+  padding: 4px 8px;
+  font-size: $font-size-md;
+  font-family: $font-primary;
+  color: $text-primary;
+  background: $white;
+  outline: none;
+
+  &:focus {
+    border-color: $primary-color;
+  }
+}
+
+.saveButton,
+.cancelButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-sm;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $bg-sidebar;
+  }
+}
+
+.saveButton {
+  color: $primary-color;
+}
+
+.cancelButton {
+  color: $text-light;
+}
+
+/* Мобильный хедер (появляется только на мобильных) */
+.mobileHeader {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: $white;
+    padding: 15px 16px;
+    margin: 0 -16px 16px; // компенсация padding родителя и отступ снизу
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    img {
+      width: 27px;
+      height: 23px;
+      filter: brightness(0) saturate(100%) invert(45%) sepia(96%) saturate(1842%) hue-rotate(338deg);
+    }
+
+    span {
+      font-family: $font-secondary;
+      font-size: 16px;
+      line-height: 30px;
+      color: #000000;
+      letter-spacing: 0.01em;
+    }
+  }
+
+  .mobileProfile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .mobileAvatar {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .mobileUsername {
+      font-family: $font-primary;
+      font-size: $font-size-sm;
+      color: $text-primary;
+    }
+  }
+}
+
+/* Мобильные кнопки навигации (только на мобильных) */
+.mobileNavButtons {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: flex;
+    gap: 19px;
+    padding: 0 16px;
+    margin-bottom: 20px;
+  }
+
+  .navButton {
+    flex: 1;
+    height: 44px;
+    border: none;
+    border-radius: 30px;
+    font-family: $font-primary;
+    font-size: $font-size-md;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: opacity $transition-fast;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .tracksButton {
+    background: $primary-color;
+    color: $white;
+
+    img {
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  .favoritesButton {
+    background: $white;
+    color: $text-secondary;
+    border: 1px solid $border-color;
+  }
+}
+
+/* Контейнер для всего контента, идущего после поиска и профиля */
+.mainContent {
+  // На десктопе занимает всю ширину грида и располагается ниже
+  grid-column: 1 / -1;
+
+  @media (max-width: 767px) {
+    // На мобильных грид отключён, поэтому это просто блочный элемент
+  }
+}
+
+.contentWrapper {
+  max-width: $track-list-width; // 1074px
+
+  @media (max-width: 767px) {
+    max-width: 328px;
+    margin: 0 auto;
+  }
+}
+
+.contentHeader {
+  margin-bottom: $spacing-xl;
+
+  h1 {
+    font-family: $font-primary;
+    font-size: $font-size-xl;
+    line-height: 30px;
+    color: $text-secondary;
+    margin: 0;
+    font-weight: 400;
+
+    @media (max-width: 767px) {
+      display: none;
+    }
+  }
+}

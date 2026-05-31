@@ -1,0 +1,99 @@
+// src/styles/_variables.scss
+
+// Colors
+$primary-color: #FC6D3E;
+$bg-primary: #FFFFFF;
+$white: $bg-primary;
+$bg-sidebar: #F5F5F5;
+$sidebar-bg: $bg-sidebar;
+$bg-highlight: #FFFFFF;
+$text-primary: #171717;
+$text-secondary: #11253D;
+$text-light: #AAAAAA;
+$border-color: #E8E8E8;
+$icon-color: #AAAAAA;
+$icon-active: $primary-color;
+$dots-color: #C4C4C4;
+$player-button-bg: #AAAAAA;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Breakpoints
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$mobile: $breakpoint-mobile;
+$tablet: $breakpoint-tablet;
+$desktop: $breakpoint-desktop;
+
+// Typography
+$font-family-primary: 'Actor', sans-serif;
+$font-primary: $font-family-primary;
+$font-family-secondary: 'Erica One', cursive;
+$font-secondary: $font-family-secondary;
+$font-size-xs: 11px;
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-size-lg: 20px;
+$font-size-xl: 30px;
+
+// Z-index
+$z-index-sidebar: 100;
+$z-index-player: 200;
+$z-index-modal: 300;
+$z-sidebar: $z-index-sidebar;
+$z-player: $z-index-player;
+
+// Transitions
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Border radius
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 30px;
+$border-radius-circle: 50%;
+$radius-sm: $border-radius-sm;
+$radius-md: $border-radius-md;
+$radius-lg: $border-radius-lg;
+$radius-circle: $border-radius-circle;
+$radius-player-button: 86px;
+
+// Sizes (из Figma)
+$sidebar-width: 290px;
+$player-height: 100px;
+$search-height: 53px;
+$profile-width: 246px;
+$profile-height: 53px;
+$track-row-height: 88px;
+$cover-size: 60px;
+$icon-size-sm: 16px;
+$icon-size-md: 24px;
+$icon-size-lg: 30px;
+$volume-width: 72px;
+$volume-height: 4px;
+$volume-fill-width: 42px;
+$volume-knob-size: 12px;
+$progress-width: 609px;
+$progress-height: 4px;
+$progress-fill-width: 174px;
+
+// Column widths (из Figma)
+$col-number: 40px;
+$col-title: 434px;
+$col-album: 262px;
+$col-artist: 195px;
+$col-likes: 44px;
+$col-duration: 56px;
+$col-actions: 43px;
+
+// Track list container
+$track-list-width: 1074px;
+$track-list-height: 736px;
+$track-header-height: 32px;

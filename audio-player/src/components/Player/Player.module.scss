@@ -1,0 +1,305 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.player {
+  width: 100%;
+  height: $player-height; // 100px
+  background: $bg-primary;
+  border-top: 1px solid $border-color;
+  padding: 0 $spacing-xl;
+
+  // Используем grid для точного позиционирования двух строк
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr 1fr; // две строки одинаковой высоты
+  align-items: stretch;
+  gap: $spacing-md;
+
+  @media (max-width: 767px) {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 16px 0;
+    align-items: stretch;
+  }
+}
+
+.trackInfo {
+  grid-row: span 2; // занимает обе строки
+  display: flex;
+  align-items: center; // центрируем по вертикали внутри блока
+  gap: $spacing-md;
+  min-width: 200px;
+
+  @media (max-width: 767px) {
+    min-width: auto;
+    margin-bottom: 8px;
+    grid-row: auto;
+  }
+}
+
+.cover {
+  width: $cover-size;
+  height: $cover-size;
+  border-radius: $border-radius-sm;
+  object-fit: cover;
+
+  @media (max-width: 767px) {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.trackDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; // распределяем название и исполнителя по вертикали
+  height: 100%;
+  padding: $spacing-sm 0;
+
+  h4 {
+    font-size: $font-size-md;
+    color: $text-primary;
+    margin: 0;
+    line-height: 1.2;
+
+    @media (max-width: 767px) {
+      font-size: 18px;
+      line-height: 22px;
+    }
+  }
+
+  p {
+    font-size: $font-size-sm;
+    color: $text-light;
+    margin: 0;
+    line-height: 1.2;
+
+    @media (max-width: 767px) {
+      font-size: 12px;
+      line-height: 12px;
+    }
+  }
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  h4 {
+    margin: 0;
+  }
+}
+
+.playerLikeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+
+  img {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(0.7);
+    transition: filter $transition-fast;
+  }
+
+  &:hover img {
+    filter: brightness(0) invert(0.4);
+  }
+
+  &.active img {
+    filter: brightness(0) saturate(100%) invert(45%) sepia(96%) saturate(1842%) hue-rotate(338deg);
+  }
+}
+
+.centerControls {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; // кнопки сверху, прогресс снизу
+  max-width: $progress-width;
+  margin: 0 auto; // центрируем по горизонтали
+
+  @media (max-width: 767px) {
+    grid-row: auto;
+    max-width: none;
+    margin: 0;
+  }
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-lg;
+
+  @media (max-width: 767px) {
+    justify-content: flex-end;
+    .controlButton:not(.play) {
+      display: none;
+    }
+  }
+}
+
+.controlButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $spacing-xs;
+
+  img {
+    width: $icon-size-sm;
+    height: $icon-size-sm;
+    filter: brightness(0) invert(0.7);
+    transition: filter $transition-fast;
+
+    @media (max-width: 767px) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &:hover img {
+    filter: brightness(0) invert(0.4);
+  }
+
+  &.play {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: $icon-size-md;
+      height: $icon-size-md;
+      filter: none !important;
+    }
+  }
+
+  &.active img {
+    filter: brightness(0) saturate(100%) invert(45%) sepia(96%) saturate(1842%) hue-rotate(338deg) brightness(99%) contrast(101%);
+  }
+}
+
+.progress {
+  width: 100%;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.mobileProgress {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: block;
+    width: 100%;
+    order: 1;
+    margin-top: 8px;
+    padding: 0;
+  }
+}
+
+.time {
+  display: flex;
+  justify-content: space-between;
+  font-size: $font-size-xs;
+  color: $text-light;
+  margin-bottom: $spacing-xs;
+
+  @media (max-width: 767px) {
+    font-size: 11px;
+  }
+}
+
+.progressBar {
+  width: 100%;
+  height: $progress-height;
+  background: $border-color;
+  border-radius: 75px;
+  cursor: pointer;
+}
+
+.progressFill {
+  height: 100%;
+  background: $primary-color;
+  border-radius: 75px;
+  transition: width 0.1s ease;
+}
+
+.actions {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; // блок громкости внизу
+  align-items: flex-end;
+  gap: $spacing-md;
+
+  @media (max-width: 767px) {
+    grid-row: auto;
+    display: none;
+  }
+}
+
+.volume {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  img {
+    width: $icon-size-sm;
+    height: $icon-size-sm;
+    filter: brightness(0) invert(0.7);
+    transition: filter $transition-fast;
+  }
+
+  &:hover img {
+    filter: brightness(0) invert(0.4);
+  }
+
+  span {
+    font-size: $font-size-xs;
+    color: $text-light;
+    min-width: 35px;
+    text-align: right;
+  }
+}
+
+.volumeBar {
+  width: $volume-width;
+  height: $volume-height;
+  background: $border-color;
+  border-radius: 39px;
+  cursor: pointer;
+  position: relative;
+}
+
+.volumeProgress {
+  height: 100%;
+  background: $primary-color;
+  border-radius: 39px;
+}
+
+.volumeKnob {
+  position: absolute;
+  top: -4px;
+  width: $volume-knob-size;
+  height: $volume-knob-size;
+  background: $primary-color;
+  border-radius: 50%;
+}
+
+.empty {
+  text-align: center;
+  width: 100%;
+  color: $text-light;
+  padding: 40px;
+}

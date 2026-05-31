@@ -1,0 +1,82 @@
+[
+  {
+    "id": "1",
+    "title": "In Bloom",
+    "artist": "Nirvana",
+    "album": "Nirvana",
+    "duration": 335,
+    "added": "6 дней назад",
+    "cover": "/assets/images/nirvana.png",
+    "cover2x": "/assets/images/nirvana@2x.png"
+  },
+  {
+    "id": "2",
+    "title": "Gangsta's Paradise",
+    "artist": "Coolio, L.V.",
+    "album": "Gangsta's Paradise",
+    "duration": 335,
+    "added": "7 дней назад",
+    "cover": "/assets/images/coolio.png",
+    "cover2x": "/assets/images/coolio@2x.png"
+  },
+  {
+    "id": "3",
+    "title": "Разговоры о животных",
+    "artist": "Подают студия Константина Петрова",
+    "album": "-",
+    "duration": 335,
+    "added": "7 дней назад",
+    "cover": "/assets/images/people.png",
+    "cover2x": "/assets/images/people@2x.png"
+  },
+  {
+    "id": "4",
+    "title": "Animal I Have Become",
+    "artist": "Three Days Grace",
+    "album": "One-X",
+    "duration": 335,
+    "added": "7 дней назад",
+    "cover": "/assets/images/music.png",
+    "cover2x": "/assets/images/music@2x.png"
+  },
+  {
+    "id": "5",
+    "title": "Histoire Sans Nom",
+    "artist": "Ludovico Einaudi, Czech National Symphony Orchestra",
+    "album": "Histoire Sans Nom",
+    "duration": 335,
+    "added": "8 дней назад",
+    "cover": "/assets/images/Ludovico.png",
+    "cover2x": "/assets/images/Ludovico@2x.png"
+  },
+  {
+    "id": "6",
+    "title": "To The Skies From A Hillside",
+    "artist": "Maybeshewill",
+    "album": "To The Skies From A Hillside",
+    "duration": 335,
+    "added": "9 дней назад",
+    "cover": "/assets/images/skies.png",
+    "cover2x": "/assets/images/skies@2x.png"
+  },
+  {
+    "id": "7",
+    "title": "Co-Conspirators",
+    "artist": "Maybeshewill",
+    "album": "Sing The Word Hope In Four-Part Harmony",
+    "duration": 335,
+    "added": "9 дней назад",
+    "cover": "/assets/images/Conspirators.png",
+    "cover2x": "/assets/images/Conspirators@2x.png"
+  },
+  {
+    "id": "8",
+    "title": "Surrounded By Spies",
+    "artist": "Placebo",
+    "album": "Surrounded By Spies",
+    "duration": 335,
+    "added": "10 дней назад",
+    "cover": "/assets/images/spies.png",
+    "cover2x": "/assets/images/spies@2x.png"
+  }
+]

@@ -1,0 +1,318 @@
+@import '../../styles/variables';
+
+.trackList {
+  width: $track-list-width;        // 1074px
+  height: 850px;
+  background: $white;
+  margin-top: 58px;
+  overflow-y: auto;
+
+  // Десктоп
+  @media (min-width: 768px) {
+    // Для точного совпадения с макетом используем box-sizing
+    box-sizing: border-box;
+  }
+
+  // Мобильная версия
+  @media (max-width: 767px) {
+    width: 100%;
+    height: auto;
+    margin-top: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 16px;
+    overflow-y: visible;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $border-color;
+    border-radius: $radius-sm;
+  }
+}
+
+.trackHeader {
+  @media (min-width: 768px) {
+    display: grid;
+    // Фиксированная ширина колонок (в пикселях) в точности по макету
+    grid-template-columns: 40px 403px 262px 195px 44px 70px 60px;
+    align-items: center;
+    height: $track-header-height;      // 32px
+    background: $white;
+    border-bottom: 1px solid $border-color;
+    padding: 0;
+    font-size: $font-size-sm;
+    color: #A4A4A4;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+
+    span {
+      padding: 10px 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      // Убедимся, что padding не выходит за границы колонки
+      box-sizing: border-box;
+    }
+
+    .iconHeader {
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+
+      img {
+        width: 16px;
+        height: 16px;
+        filter: brightness(0) invert(0.7);
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.trackRow {
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 40px 403px 262px 195px 44px 70px 60px;
+    align-items: center;
+    height: $track-row-height;        // 88px
+    background: $white;
+    border-bottom: 1px solid $border-color;
+    cursor: pointer;
+    transition: background $transition-fast;
+
+    &:hover {
+      background: $bg-sidebar;
+    }
+
+    &.playing {
+      background: $bg-sidebar;
+      .title {
+        font-weight: 600;
+      }
+    }
+
+    // Чтобы padding в ячейках не ломал ширину
+    > * {
+      box-sizing: border-box;
+    }
+  }
+
+  @media (max-width: 767px) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: $white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: background $transition-fast;
+
+    &:hover {
+      background: $bg-sidebar;
+    }
+
+    &.playing {
+      background: $bg-sidebar;
+    }
+  }
+}
+
+.trackNumber {
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-lg;
+    line-height: 24px;
+    color: $text-primary;
+    letter-spacing: 0.01em;
+    // Центрируем номер по горизонтали
+    text-align: center;
+  }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.trackMain {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  @media (max-width: 767px) {
+    flex: 1;
+    gap: 12px;
+  }
+
+  .cover {
+    width: $cover-size;
+    height: $cover-size;
+    background: $bg-sidebar;
+    border-radius: $border-radius-sm;
+    object-fit: cover;
+
+    @media (max-width: 767px) {
+      width: 70px;
+      height: 70px;
+    }
+  }
+
+  .trackInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .title {
+      font-size: $font-size-md;
+      line-height: 1.2;
+      color: $text-primary;
+      letter-spacing: 0.01em;
+
+      @media (max-width: 767px) {
+        font-size: 18px;
+        line-height: 22px;
+      }
+    }
+
+    .artist {
+      font-size: $font-size-sm;
+      line-height: 1.2;
+      color: $text-light;
+      letter-spacing: 0.01em;
+
+      @media (max-width: 767px) {
+        font-size: 12px;
+        line-height: 12px;
+      }
+    }
+  }
+}
+
+.trackAlbum {
+  @media (min-width: 768px) {
+    font-size: $font-size-md;
+    line-height: 12px;
+    color: $text-primary;
+    padding: 14px 10px 14px 8px;
+    // Выравнивание по левому краю
+    text-align: left;
+  }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.trackAdded {
+  @media (min-width: 768px) {
+    font-size: $font-size-sm;
+    line-height: 12px;
+    color: $text-light;
+    padding: 14px 10px 14px 8px;
+    text-align: left;
+  }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.trackLikes {
+  display: flex;
+  align-items: center;
+  justify-content: center; // центрируем иконку сердца
+}
+
+.likeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: $icon-size-md;
+    height: $icon-size-md;
+    filter: brightness(0) invert(0.7);
+    transition: filter $transition-fast;
+
+    @media (max-width: 767px) {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &:hover img {
+    filter: brightness(0) invert(0.4);
+  }
+
+  &.active img {
+    filter: brightness(0) saturate(100%) invert(45%) sepia(96%) saturate(1842%) hue-rotate(338deg);
+  }
+}
+
+.trackDuration {
+  @media (min-width: 768px) {
+    font-size: $font-size-md;
+    line-height: 12px;
+    color: $text-light;
+    padding: 14px 10px 14px 8px;
+    text-align: left;
+  }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.trackActions {
+  display: flex;
+  align-items: center;
+  justify-content: center; // центрируем кнопку "ещё"
+
+  @media (max-width: 767px) {
+    margin-left: auto;
+  }
+}
+
+.moreButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  gap: 3px;
+  padding: 0;
+
+  .dot {
+    width: 4px;
+    height: 4px;
+    background: $dots-color;
+    border-radius: 50%;
+  }
+}
+
+.emptyState {
+  text-align: center;
+  padding: $spacing-xl;
+  color: $text-light;
+  font-size: $font-size-md;
+  background: $bg-sidebar;
+  border-radius: $border-radius-md;
+
+  @media (max-width: 767px) {
+    margin: 16px;
+  }
+}
