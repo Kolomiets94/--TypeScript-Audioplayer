@@ -1,163 +1,117 @@
-🎵 TypeScript Audioplayer
-Веб-приложение для прослушивания музыки с авторизацией, избранными треками и удобным аудиоплеером. Реализовано на React с использованием TypeScript, Redux Toolkit и Express-бэкенда.
+# TypeScript Audioplayer
 
-GitHub репозиторий: Kolomiets94/--TypeScript-Audioplayer
+A full-stack educational audio player built with React, TypeScript and Express. The project demonstrates audio playback, client-side state management, JWT authentication and a small REST API.
 
-✨ Функциональность
-Основные возможности
-✅ Регистрация и авторизация пользователей (JWT-токены)
+## Features
 
-✅ Просмотр списка всех треков
+- Custom HTML5 Audio player
+- Play / pause, seek and ±10 second controls
+- Volume control
+- Track search
+- Favorites with backend persistence per authenticated user
+- Registration and login with JWT authentication
+- Password hashing with bcrypt
+- User profile with editable name and avatar preview
+- Responsive interface for desktop and mobile
+- REST API powered by Express
 
-✅ Аудиоплеер с функциями:
+## Tech stack
 
-Воспроизведение / пауза
+### Frontend
+- React 18
+- TypeScript
+- Redux Toolkit
+- React Redux
+- Axios
+- SCSS Modules
+- HTML5 Audio API
 
-Переход к следующему/предыдущему треку
+### Backend
+- Node.js
+- Express
+- JSON Web Token
+- bcrypt
+- CORS
+- Morgan
+- JSON file persistence for demo data
 
-Перемотка на временной шкале (клик мыши)
+## Technical highlights
 
-Перемотка ±10 секунд (кнопки / клавиатура)
+The player logic is separated into reusable hooks and Redux state. `useAudio` manages the browser Audio API, playback state, progress, seeking and volume.
 
-Регулировка громкости
+Authentication is handled by the Express API. New passwords are stored as bcrypt hashes, successful registration and login return a JWT, and protected requests send the token through the Authorization header.
 
-✅ Добавление и удаление треков из избранного
+Favorites are stored per authenticated user. The UI uses an optimistic update and rolls the change back if the API request fails.
 
-✅ Пагинация (десктоп — классическая, мобильная — ленивая подгрузка)
+## Project structure
 
-✅ Страница профиля пользователя с аватаром-заглушкой
+```text
+.
+├── audio-player/
+│   ├── public/
+│   └── src/
+│       ├── components/
+│       ├── data/
+│       ├── hooks/
+│       ├── services/
+│       ├── store/
+│       ├── styles/
+│       ├── types/
+│       └── utils/
+└── express-backend/
+    ├── server.js
+    └── package.json
+```
 
-✅ Адаптивный дизайн (Chrome, Firefox, Safari, Opera, Edge)
+## Run locally
 
-Технологии
-Frontend: React, TypeScript, Redux Toolkit, SCSS (БЭМ)
+### Backend
 
-Backend: Express (готовый локальный сервер)
-
-API взаимодействие: Fetch API, JWT-аутентификация
-
-Аудиоплеер: кастомный на основе HTML5 Audio
-
-🚀 Запуск проекта локально
-Требования
-Node.js (версия 14 или выше)
-
-npm или yarn
-
-Установка
-Клонировать репозиторий
-
-bash
-git clone https://github.com/Kolomiets94/--TypeScript-Audioplayer.git
-cd --TypeScript-Audioplayer
-Установить зависимости для бэкенда
-
-bash
+```bash
 cd express-backend
 npm install
-Запустить сервер (бэкенд)
+npm run dev
+```
 
-bash
-npm start
-Сервер будет доступен по адресу: http://localhost:8000
+The API runs at `http://localhost:8000`.
 
-Установить зависимости для фронтенда
+For local development you can optionally set a JWT secret:
 
-bash
-cd ../audio-player
+```bash
+JWT_SECRET=your-secret npm run dev
+```
+
+### Frontend
+
+Open another terminal:
+
+```bash
+cd audio-player
 npm install
-Запустить фронтенд приложение
-
-bash
 npm start
-Приложение откроется по адресу: http://localhost:3000
+```
 
-🔗 API эндпоинты (бэкенд)
-Метод	URL	Описание
-POST	/api/register	Регистрация нового пользователя
-POST	/api/login	Авторизация (возвращает JWT токен)
-GET	/api/tracks	Получить список всех треков
-GET	/api/favorites	Получить избранные треки
-POST	/api/favorites	Добавить трек в избранное
-DELETE	/api/favorites	Удалить трек из избранного
-Защищённые эндпоинты требуют заголовок:
-Authorization: Bearer <token>
+The React application runs at `http://localhost:3000`.
 
-📁 Структура проекта
-text
---TypeScript-Audioplayer/
-├── audio-player/               # Клиентская часть (React)
-│   ├── public/
-│   │   └── assets/             # Иконки, изображения
-│   ├── src/
-│   │   ├── components/         # UI компоненты (Auth, Player, Sidebar...)
-│   │   ├── hooks/              # Кастомные хуки (useAudio, redux...)
-│   │   ├── services/           # API сервисы (auth, tracks, favorites)
-│   │   ├── store/              # Redux слайсы (auth, player, tracks)
-│   │   ├── styles/             # Глобальные стили, переменные, миксины
-│   │   ├── types/              # TypeScript типы и интерфейсы
-│   │   └── utils/              # Вспомогательные функции
-│   ├── package.json
-│   └── tsconfig.json
-├── express-backend/            # Бэкенд (Express)
-│   ├── server.js
-│   ├── users.json              # Локальное хранилище пользователей
-│   └── package.json
-└── README.md
-🛠️ Разработка и кодстайл
-Именование классов: методология БЭМ
+## API
 
-Типизация: строгая TypeScript (без any)
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | `/api/register` | Create an account and return a JWT |
+| POST | `/api/login` | Sign in and return a JWT |
+| GET | `/api/tracks` | Get tracks (protected) |
+| GET | `/api/favorites` | Get current user's favorites |
+| POST | `/api/favorites` | Add a track to favorites |
+| DELETE | `/api/favorites` | Remove a track from favorites |
 
-Линтер: (рекомендуется ESLint)
+## Notes
 
-Адаптивность: Mobile First, медиа-запросы
+This is a portfolio/educational project. The backend intentionally uses JSON files instead of a production database. For production use, secrets should be configured through environment variables and persistent storage should be moved to a database.
 
-Пагинация: десктоп — кнопки страниц, мобильная версия — бесконечный скролл (Intersection Observer)
+## Author
 
-🧪 Тестирование и проверка
-Приложение протестировано в следующих браузерах (последние версии):
+**Alexander Kolomiets** — Junior Frontend Developer (React / TypeScript)
 
-Google Chrome
-
-Mozilla Firefox
-
-Safari
-
-Opera
-
-Microsoft Edge
-
-Для проверки адаптивности можно использовать инструменты разработчика (DevTools) в режиме эмуляции мобильных устройств.
-
-👤 Профиль пользователя
-Страница профиля содержит:
-
-Имя пользователя (username)
-
-Аватар-заглушку
-
-Возможность просмотра избранных треков (при клике на сердечко)
-
-Аватар временно статичный — заглушка.
-
-🎨 Дополнительные фишки (сверх ТЗ)
-Клавиатурные команды для управления плеером (пробел — пауза/воспроизведение, стрелки влево/вправо — перемотка ±10 сек)
-
-Визуальная анимация прогресс-бара
-
-Плавные переходы между страницами
-
-Адаптивный сайдбар (скрывается на мобильных устройствах)
-
-📄 Лицензия
-Проект создан в рамках учебного курса. Не предназначен для коммерческого использования.
-
-👤 Контактная информация
-Александр Коломиец
-
-Email: Kolomiets94@yandex.ru
-
-Telegram: @Kolomiets94
-
-GitHub: github.com/Kolomiets94
+- GitHub: https://github.com/Kolomiets94
+- Email: Kolomiets94@yandex.ru
+- Telegram: @Kolomiets94
