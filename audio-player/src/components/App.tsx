@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Sidebar from './Sidebar/Sidebar';
 import Search from './Search/Search';
 import TrackList from './TrackList/TrackList';
@@ -8,6 +8,7 @@ import styles from './App.module.scss';
 import '../styles/global.scss';
 import { tracks as initialTracks } from '../data/tracks';
 import { Track } from './TrackList/TrackItem';
+import { api } from '../services/api';
 
 export type View = 'tracks' | 'favorites' | 'profile';
 
@@ -31,12 +32,40 @@ const App: React.FC = () => {
     setSearchQuery(query);
   };
 
-  const handleLike = (id: number) => {
-    setTracks(prev =>
-      prev.map(track =>
-        track.id === id ? { ...track, liked: !track.liked } : track
-      )
+  useEffect(() => {
+    if (!api.getToken()) return;
+
+    api.getFavorites()
+      .then((favoriteIds) => {
+        const ids = new Set(favoriteIds.map((id) => Number(id)));
+        setTracks((prev) => prev.map((track) => ({ ...track, liked: ids.has(track.id) })));
+      })
+      .catch((error) => console.error('Failed to load favorites:', error));
+  }, []);
+
+  const handleLike = async (id: number) => {
+    const track = tracks.find((item) => item.id === id);
+    if (!track) return;
+
+    const nextLiked = !track.liked;
+    setTracks((prev) =>
+      prev.map((item) => item.id === id ? { ...item, liked: nextLiked } : item)
     );
+
+    if (!api.getToken()) return;
+
+    try {
+      if (nextLiked) {
+        await api.addToFavorites(String(id));
+      } else {
+        await api.removeFromFavorites(String(id));
+      }
+    } catch (error) {
+      setTracks((prev) =>
+        prev.map((item) => item.id === id ? { ...item, liked: !nextLiked } : item)
+      );
+      console.error('Failed to update favorite:', error);
+    }
   };
 
   const handleTrackSelect = (id: number) => {
