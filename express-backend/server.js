@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const app = express();
 const PORT = 8000;
 const USERS_FILE = path.join(__dirname, 'users.json');
+const FAVORITES_FILE = path.join(__dirname, 'favorites.json');
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -32,6 +33,33 @@ const writeUsers = (users) => {
     fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
   } catch (err) {
     console.error('Ошибка записи users.json:', err);
+  }
+};
+
+const readFavorites = () => {
+  try {
+    if (!fs.existsSync(FAVORITES_FILE)) return {};
+    return JSON.parse(fs.readFileSync(FAVORITES_FILE, 'utf8'));
+  } catch (err) {
+    console.error('Ошибка чтения favorites.json:', err);
+    return {};
+  }
+};
+
+const writeFavorites = (favorites) => {
+  fs.writeFileSync(FAVORITES_FILE, JSON.stringify(favorites, null, 2), 'utf8');
+};
+
+const getAuthenticatedUsername = (req) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
+  try {
+    return jwt.verify(
+      authHeader.split(' ')[1],
+      process.env.JWT_SECRET || 'dev-secret-key'
+    ).username;
+  } catch {
+    return null;
   }
 };
 
@@ -99,30 +127,40 @@ app.get('/api/tracks', (req, res) => {
   res.json(tracks);
 });
 
-// Работа с избранным (заглушка, сохранять в файл можно позже)
+// Избранное хранится отдельно для каждого пользователя
 app.get('/api/favorites', (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Требуется авторизация' });
-  }
-  // Пока возвращаем пустой массив
-  res.json([]);
+  const username = getAuthenticatedUsername(req);
+  if (!username) return res.status(401).json({ message: 'Требуется авторизация' });
+
+  const favorites = readFavorites();
+  res.json(favorites[username] || []);
 });
 
 app.post('/api/favorites', (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Требуется авторизация' });
-  }
-  res.json({ message: 'композиция добавлена в избранное' });
+  const username = getAuthenticatedUsername(req);
+  if (!username) return res.status(401).json({ message: 'Требуется авторизация' });
+
+  const trackId = String(req.body.trackId);
+  const favorites = readFavorites();
+  const userFavorites = favorites[username] || [];
+
+  if (!userFavorites.includes(trackId)) userFavorites.push(trackId);
+  favorites[username] = userFavorites;
+  writeFavorites(favorites);
+
+  res.status(201).json({ trackId });
 });
 
 app.delete('/api/favorites', (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Требуется авторизация' });
-  }
-  res.json({ message: 'композиция убрана из избранного' });
+  const username = getAuthenticatedUsername(req);
+  if (!username) return res.status(401).json({ message: 'Требуется авторизация' });
+
+  const trackId = String(req.body.trackId);
+  const favorites = readFavorites();
+  favorites[username] = (favorites[username] || []).filter(id => id !== trackId);
+  writeFavorites(favorites);
+
+  res.status(204).end();
 });
 
 app.listen(PORT, () => {
