@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import PlayerControls from './PlayerControls';
 import VolumeControl from './VolumeControl';
 import ProgressBar from './ProgressBar';
 import { Track } from '../TrackList/TrackItem';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { setCurrentTrack, setIsPlaying, setQueue } from '../../store/playerSlice';
+import { useAudio } from '../../hooks/useAudio';
 import styles from './Player.module.scss';
 
 interface PlayerProps {
@@ -11,7 +14,18 @@ interface PlayerProps {
 }
 
 const Player: React.FC<PlayerProps> = ({ track, onLike }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const dispatch = useAppDispatch();
+  const { isPlaying, currentTime, duration } = useAppSelector((state) => state.player);
+  const { seek, skipForward, skipBackward } = useAudio();
+
+  useEffect(() => {
+    const playerTrack = {
+      ...track,
+      id: String(track.id),
+    };
+    dispatch(setCurrentTrack(playerTrack));
+    dispatch(setQueue([playerTrack]));
+  }, [dispatch, track]);
 
   const handleLikeClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -30,7 +44,7 @@ const Player: React.FC<PlayerProps> = ({ track, onLike }) => {
               onClick={handleLikeClick}
               aria-label="Like"
             >
-              <img src="/assets/icons/heart.svg" alt="Like" />
+              <img src="/assets/icons/heart.svg" alt="" />
             </button>
           </div>
           <p>{track.artist}</p>
@@ -40,25 +54,19 @@ const Player: React.FC<PlayerProps> = ({ track, onLike }) => {
       <div className={styles.centerControls}>
         <PlayerControls
           isPlaying={isPlaying}
-          onPlayPause={() => setIsPlaying(!isPlaying)}
+          onPlayPause={() => dispatch(setIsPlaying(!isPlaying))}
           onPrev={() => {}}
           onNext={() => {}}
           onShuffle={() => {}}
           onRepeat={() => {}}
+          onSkipForward={skipForward}
+          onSkipBackward={skipBackward}
         />
-        <ProgressBar
-          currentTime={26}
-          duration={415}
-          onSeek={(time) => console.log('Seek to', time)}
-        />
+        <ProgressBar currentTime={currentTime} duration={duration} onSeek={seek} />
       </div>
 
       <div className={styles.mobileProgress}>
-        <ProgressBar
-          currentTime={26}
-          duration={415}
-          onSeek={(time) => console.log('Seek to', time)}
-        />
+        <ProgressBar currentTime={currentTime} duration={duration} onSeek={seek} />
       </div>
 
       <div className={styles.actions}>
