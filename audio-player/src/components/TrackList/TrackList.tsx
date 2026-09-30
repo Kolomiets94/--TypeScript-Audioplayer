@@ -28,11 +28,11 @@ const TrackList: React.FC<TrackListProps> = ({
         <span>Название</span>
         <span>Альбом</span>
         <span className={styles.iconHeader}>
-          <img src="/assets/icons/CalendarBlank.svg" alt="Added" />
+          <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/CalendarBlank.svg`} alt="Added" />
         </span>
         <span></span> {/* пустая колонка для лайков */}
         <span className={styles.iconHeader}>
-          <img src="/assets/icons/watches.svg" alt="Duration" />
+          <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/watches.svg`} alt="Duration" />
         </span>
         
       </div>
