@@ -21,19 +21,19 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
   return (
     <div className={styles.controls}>
       <button className={`${styles.controlButton} ${isShuffle ? styles.active : ''}`} onClick={onShuffle}>
-        <img src="/assets/icons/Shuffle.svg" alt="Shuffle" />
+        <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/Shuffle.svg`} alt="Shuffle" />
       </button>
       <button className={styles.controlButton} onClick={onSkipBackward} title="-10 сек">
-        <img src="/assets/icons/SkipBack.svg" alt="-10s" />
+        <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/SkipBack.svg`} alt="-10s" />
       </button>
       <button className={`${styles.controlButton} ${styles.play}`} onClick={onPlayPause}>
-        <img src="/assets/icons/button.svg" alt={isPlaying ? 'Pause' : 'Play'} />
+        <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/button.svg`} alt={isPlaying ? 'Pause' : 'Play'} />
       </button>
       <button className={styles.controlButton} onClick={onSkipForward} title="+10 сек">
-        <img src="/assets/icons/SkipForward.svg" alt="+10s" />
+        <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/SkipForward.svg`} alt="+10s" />
       </button>
       <button className={`${styles.controlButton} ${repeatMode !== 'off' ? styles.active : ''}`} onClick={onRepeat}>
-        <img src="/assets/icons/Repeat.svg" alt="Repeat" />
+        <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/Repeat.svg`} alt="Repeat" />
       </button>
     </div>
   );
