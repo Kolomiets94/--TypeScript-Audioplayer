@@ -4,29 +4,35 @@ import VolumeControl from './VolumeControl';
 import ProgressBar from './ProgressBar';
 import { Track } from '../TrackList/TrackItem';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setCurrentTrack, setIsPlaying, setQueue, setQueueIndex, nextTrack, previousTrack } from '../../store/playerSlice';
+import { setCurrentTrack, setIsPlaying, setQueue, setQueueIndex } from '../../store/playerSlice';
 import { useAudio } from '../../hooks/useAudio';
 import styles from './Player.module.scss';
 
 interface PlayerProps {
   track: Track;
+  tracks: Track[];
+  onTrackChange: (id: number) => void;
   onLike: (id: number) => void;
 }
 
-const Player: React.FC<PlayerProps> = ({ track, onLike }) => {
+const Player: React.FC<PlayerProps> = ({ track, tracks, onTrackChange, onLike }) => {
   const dispatch = useAppDispatch();
   const { isPlaying, currentTime, duration } = useAppSelector((state) => state.player);
   const { seek, skipForward, skipBackward } = useAudio();
 
   useEffect(() => {
-    const playerTrack = {
-      ...track,
-      id: String(track.id),
-    };
-    dispatch(setCurrentTrack(playerTrack));
-    dispatch(setQueue([playerTrack]));
-    dispatch(setQueueIndex(0));
-  }, [dispatch, track]);
+    const queue = tracks.map((item) => ({ ...item, id: String(item.id) }));
+    const index = Math.max(0, tracks.findIndex((item) => item.id === track.id));
+    dispatch(setQueue(queue));
+    dispatch(setQueueIndex(index));
+    dispatch(setCurrentTrack(queue[index]));
+  }, [dispatch, track.id, tracks]);
+
+  const changeTrack = (offset: number) => {
+    const index = tracks.findIndex((item) => item.id === track.id);
+    const next = tracks[index + offset];
+    if (next) onTrackChange(next.id);
+  };
 
   const handleLikeClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -56,8 +62,8 @@ const Player: React.FC<PlayerProps> = ({ track, onLike }) => {
         <PlayerControls
           isPlaying={isPlaying}
           onPlayPause={() => dispatch(setIsPlaying(!isPlaying))}
-          onPrev={() => dispatch(previousTrack())}
-          onNext={() => dispatch(nextTrack())}
+          onPrev={() => changeTrack(-1)}
+          onNext={() => changeTrack(1)}
           onShuffle={() => dispatch(setCurrentTime(0))}
           onRepeat={() => seek(0)}
           onSkipForward={skipForward}
