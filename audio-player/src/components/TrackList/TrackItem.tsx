@@ -29,7 +29,7 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, isPlaying, onLike, onMore,
       <span className={styles.trackNumber}>{track.id}</span>
       <div className={styles.trackMain}>
         <img
-          src={`/assets/images/${track.cover}`}
+          src={`${process.env.PUBLIC_URL || ''}/assets/images/${track.cover}`}
           alt={track.title}
           className={styles.cover}
         />
@@ -49,7 +49,7 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, isPlaying, onLike, onMore,
           }}
           aria-label="Like"
         >
-          <img src="/assets/icons/heart.svg" alt="Like" />
+          <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/heart.svg`} alt="Like" />
         </button>
       </div>
       <span className={styles.trackDuration}>{track.duration}</span>
