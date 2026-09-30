@@ -32,7 +32,7 @@ const Auth: React.FC = () => {
     <div className={styles.auth}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <img src="/assets/images/icons/Mithosis.svg" alt="Mithosis" className={styles.logo} />
+          <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/Mithosis.svg`} alt="Mithosis" className={styles.logo} />
           <p className={styles.subtitle}>Audio Player</p>
         </div>
         
