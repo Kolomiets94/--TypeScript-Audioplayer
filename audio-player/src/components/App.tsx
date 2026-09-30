@@ -73,7 +73,9 @@ const App: React.FC = () => {
   };
 
   const handleLogout = () => {
-    console.log('Logout');
+    api.logout();
+    setUsername('username');
+    setCurrentView('tracks');
   };
 
   const handleEditStart = () => {
