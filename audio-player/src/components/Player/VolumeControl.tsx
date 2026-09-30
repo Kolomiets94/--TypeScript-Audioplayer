@@ -28,7 +28,7 @@ const VolumeControl: React.FC = () => {
 
   return (
     <div className={styles.volume}>
-      <img src="/assets/icons/volume.svg" alt="Volume" />
+      <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/volume.svg`} alt="Volume" />
       <div ref={barRef} className={styles.volumeBar} onMouseDown={handleMouseDown}>
         <div className={styles.volumeProgress} style={{ width: `${volume * 100}%` }} />
         <div className={styles.volumeKnob} style={{ left: `${volume * 100 - 6}px` }} />
