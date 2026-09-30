@@ -15,7 +15,29 @@ const TrackList: React.FC<TrackListProps> = ({
   onTrackSelect,
   onLike,
 }) => {
-  const handleMore = (id: number) => console.log('More', id);
+  const handleMore = async (id: number) => {
+    const track = tracks.find((item) => item.id === id);
+    if (!track) return;
+
+    const text = `${track.artist} — ${track.title}`;
+    const shareUrl = window.location.href;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: track.title, text, url: shareUrl });
+        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(`${text}\n${shareUrl}`);
+      window.alert('Название трека и ссылка скопированы');
+    } catch {
+      window.alert(text);
+    }
+  };
 
   if (tracks.length === 0) {
     return <div className={styles.emptyState}>Ничего не найдено</div>;
