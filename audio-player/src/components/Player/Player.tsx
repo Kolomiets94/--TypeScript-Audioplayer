@@ -35,7 +35,7 @@ const Player: React.FC<PlayerProps> = ({ track, onLike }) => {
   return (
     <div className={styles.player}>
       <div className={styles.trackInfo}>
-        <img src={`/assets/images/${track.cover}`} alt={track.title} className={styles.cover} />
+        <img src={`${process.env.PUBLIC_URL || ''}/assets/images/${track.cover}`} alt={track.title} className={styles.cover} />
         <div className={styles.trackDetails}>
           <div className={styles.titleRow}>
             <h4>{track.title}</h4>
@@ -44,7 +44,7 @@ const Player: React.FC<PlayerProps> = ({ track, onLike }) => {
               onClick={handleLikeClick}
               aria-label="Like"
             >
-              <img src="/assets/icons/heart.svg" alt="" />
+              <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/heart.svg`} alt="" />
             </button>
           </div>
           <p>{track.artist}</p>
