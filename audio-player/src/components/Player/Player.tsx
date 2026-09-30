@@ -4,7 +4,7 @@ import VolumeControl from './VolumeControl';
 import ProgressBar from './ProgressBar';
 import { Track } from '../TrackList/TrackItem';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setCurrentTrack, setIsPlaying, setQueue } from '../../store/playerSlice';
+import { setCurrentTrack, setIsPlaying, setQueue, setQueueIndex, nextTrack, previousTrack } from '../../store/playerSlice';
 import { useAudio } from '../../hooks/useAudio';
 import styles from './Player.module.scss';
 
@@ -25,6 +25,7 @@ const Player: React.FC<PlayerProps> = ({ track, onLike }) => {
     };
     dispatch(setCurrentTrack(playerTrack));
     dispatch(setQueue([playerTrack]));
+    dispatch(setQueueIndex(0));
   }, [dispatch, track]);
 
   const handleLikeClick = (e: React.MouseEvent) => {
@@ -55,10 +56,10 @@ const Player: React.FC<PlayerProps> = ({ track, onLike }) => {
         <PlayerControls
           isPlaying={isPlaying}
           onPlayPause={() => dispatch(setIsPlaying(!isPlaying))}
-          onPrev={() => {}}
-          onNext={() => {}}
-          onShuffle={() => {}}
-          onRepeat={() => {}}
+          onPrev={() => dispatch(previousTrack())}
+          onNext={() => dispatch(nextTrack())}
+          onShuffle={() => dispatch(setCurrentTime(0))}
+          onRepeat={() => seek(0)}
           onSkipForward={skipForward}
           onSkipBackward={skipBackward}
         />
