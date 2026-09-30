@@ -22,7 +22,7 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
 
   return (
     <div className={styles.search}>
-      <img src="/assets/icons/search.svg" alt="search" className={styles.searchIcon} />
+      <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/search.svg`} alt="search" className={styles.searchIcon} />
       <input
         type="text"
         placeholder="Что будем искать?"
