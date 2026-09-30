@@ -1,5 +1,7 @@
 # TypeScript Audioplayer
 
+**Live Demo:** https://kolomiets94.github.io/--TypeScript-Audioplayer/
+
 A full-stack educational audio player built with React, TypeScript and Express. The project demonstrates audio playback, client-side state management, JWT authentication and a small REST API.
 
 ## Features
