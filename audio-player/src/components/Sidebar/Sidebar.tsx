@@ -15,7 +15,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, username, 
     <aside className={styles.sidebar}>
       <div className={styles.logo}>
         <div className={styles['logo-content']}>
-          <img src="/assets/icons/Mithosis.svg" alt="VibeCast" />
+          <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/Mithosis.svg`} alt="VibeCast" />
           <span>VibeCast Studio</span>
         </div>
       </div>
@@ -25,14 +25,14 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, username, 
             className={currentView === 'tracks' ? styles.active : ''}
             onClick={() => onViewChange('tracks')} // ← здесь было 'favorites'? теперь правильно
           >
-            <img src="/assets/icons/MusicNotes.svg" alt="Tracks" />
+            <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/MusicNotes.svg`} alt="Tracks" />
             <span>Аудиокомпозиции</span>
           </li>
           <li
             className={currentView === 'favorites' ? styles.active : ''}
             onClick={() => onViewChange('favorites')} // ← здесь было 'tracks'? теперь правильно
           >
-            <img src="/assets/icons/MusicNotes.svg" alt="Favorites" />
+            <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/MusicNotes.svg`} alt="Favorites" />
             <span>Избранное</span>
           </li>
         </ul>
