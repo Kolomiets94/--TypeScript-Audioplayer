@@ -20,7 +20,7 @@ const App: React.FC = () => {
   const [username, setUsername] = useState('username');
   const [isEditingName, setIsEditingName] = useState(false);
   const [editableName, setEditableName] = useState(username);
-  const [avatarUrl, setAvatarUrl] = useState('/assets/images/user.png');
+  const [avatarUrl, setAvatarUrl] = useState(`${process.env.PUBLIC_URL || ''}/assets/images/user.png`);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -199,7 +199,7 @@ const App: React.FC = () => {
             <>
               <span className={styles.username}>{username}</span>
               <img
-                src="/assets/icons/chevron-right.svg"
+                src={`${process.env.PUBLIC_URL || ''}/assets/icons/chevron-right.svg`}
                 alt="Edit"
                 className={styles.chevronImg}
                 onClick={handleEditStart}
@@ -211,7 +211,7 @@ const App: React.FC = () => {
         {/* Мобильный хедер (появляется только на мобильных) */}
         <div className={styles.mobileHeader}>
           <div className={styles.logo}>
-            <img src="/assets/icons/Mithosis.svg" alt="VibeCast" />
+            <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/Mithosis.svg`} alt="VibeCast" />
             <span>VibeCast Studio</span>
           </div>
           <div className={styles.mobileProfile}>
@@ -233,7 +233,7 @@ const App: React.FC = () => {
             }`}
             onClick={() => handleViewChange('tracks')}
           >
-            <img src="/assets/icons/Play.svg" alt="Play" />
+            <img src={`${process.env.PUBLIC_URL || ''}/assets/icons/Play.svg`} alt="Play" />
             Аудиокомпозиции
           </button>
           <button
