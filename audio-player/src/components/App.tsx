@@ -262,7 +262,7 @@ const App: React.FC = () => {
           <div className={styles.content}>{renderContent()}</div>
         </div>
       </main>
-      <Player track={currentTrack} onLike={handleLike} />
+      <Player track={currentTrack} tracks={tracks} onTrackChange={handleTrackSelect} onLike={handleLike} />
     </div>
   );
 };
